@@ -5557,7 +5557,10 @@ var _gethostbyname_r; // stub for _gethostbyname_r
         };
         pc.onready = function(sid) {
           console.log('host ready');
-        };      
+        };
+        pc.onconnect = function() {
+          console.log('connected');
+        };
         function handleMessage(message) {
           Module.print("received " + message.byteLength + " raw bytes");
           var header = new Uint16Array(message, 0, 2);
