@@ -5568,14 +5568,18 @@ var _gethostbyname_r; // stub for _gethostbyname_r
           console.log('connected');
         };
         function handleMessage(message) {
-          Module.print("received " + message.byteLength + " raw bytes");
           var header = new Uint16Array(message, 0, 2);
           if(Sockets.peer.binds[header[1]]) {          
             Sockets.peer.binds[header[1]].inQueue.push(message);
             // console.log(Sockets.peer.binds[header[1]].inQueue.length + " messages queued for recv (onload)");
+  
+            var queueLength = Sockets.peer.binds[header[1]].inQueue.length;
+            if(queueLength > 30) {
+              console.warn("message queue is getting long: ", queueLength);
+            }
           } else {
             console.log("unable to deliver message");
-          }
+          }        
         }
         pc.unreliable.onmessage = function(message) {
           handleMessage(message.data);
@@ -5696,7 +5700,6 @@ var _connect; // stub for _connect
   
       var iov = HEAP32[(((msg)+(Sockets.msghdr_layout.msg_iov))>>2)];
       var num = HEAP32[(((msg)+(Sockets.msghdr_layout.msg_iovlen))>>2)];
-        Module.print('sendmsg vecs: ' + num);
       var totalSize = 0;
       for (var i = 0; i < num; i++) {
         totalSize += HEAP32[(((iov)+(8*i + 4))>>2)];
@@ -5705,7 +5708,6 @@ var _connect; // stub for _connect
       var ret = 0;
       for (var i = 0; i < num; i++) {
         var currNum = HEAP32[(((iov)+(8*i + 4))>>2)];
-        Module.print('sendmsg curr size: ' + currNum);
         if (!currNum) continue;
         var currBuf = HEAP32[(((iov)+(8*i))>>2)];
         data.set(HEAPU8.subarray(currBuf, currBuf+currNum), ret);
@@ -5714,8 +5716,6 @@ var _connect; // stub for _connect
       // info.sender(buffer, port); // send all the iovs as a single message
       info.header[0] = info.port; // src port
       info.header[1] = port; // dst port
-        Module.print('sendmsg port: ' + info.header[0] + ' -> ' + info.header[1]);
-        Module.print('sendmsg bytes: ' + data.length + ' | ' + Array.prototype.slice.call(data));
       // console.log('sendmsg: header', info.header);
       // console.log('sendmsg: actually sending ', Array.prototype.slice.call(data));
       // console.log("sending " + data.buffer.byteLength + " bytes to port ", port);
@@ -5741,18 +5741,16 @@ var _connect; // stub for _connect
         ___setErrNo(ERRNO_CODES.EWOULDBLOCK);
         return -1;
       }
-      console.log(info.inQueue.length + " messages queued for recv (recvmsg)");
+      // console.log(info.inQueue.length + " messages queued for recv (recvmsg)");
   
       var message = info.inQueue.shift();
       var header = new Uint16Array(message, 0, info.header.length);
-      console.log('recvmsg: header', header);
+      // console.log('recvmsg: header', header);
       var buffer = new Uint8Array(message, info.header.byteLength);
   
       var bytes = buffer.length;
       // console.log("delivering " + bytes + " bytes on port " + header[1]);
       // console.log('received', bytes, '|', Array.prototype.slice.call(buffer));
-      Module.print('recvmsg port: ' + header[1] + ' <- ' + header[0]);
-      Module.print('recvmsg bytes: ' + bytes + ' | ' + Array.prototype.slice.call(buffer));
       // write source
       var name = HEAP32[(((msg)+(Sockets.msghdr_layout.msg_name))>>2)];
       HEAP32[(((name)+(Sockets.sockaddr_in_layout.sin_addr))>>2)]=info.addr;
@@ -5764,12 +5762,10 @@ var _connect; // stub for _connect
       var bufferPos = 0;
       for (var i = 0; i < num && bytes > 0; i++) {
         var currNum = HEAP32[(((iov)+(8*i + 4))>>2)];
-        Module.print('recvmsg loop ' + [i, num, bytes, currNum]);
         if (!currNum) continue;
         currNum = Math.min(currNum, bytes); // XXX what should happen when we partially fill a buffer..?
         bytes -= currNum;
         var currBuf = HEAP32[(((iov)+(8*i))>>2)];
-        Module.print('recvmsg call recv ' + currNum);
         HEAPU8.set(buffer.subarray(bufferPos, bufferPos + currNum), currBuf);
         bufferPos += currNum;
       }
