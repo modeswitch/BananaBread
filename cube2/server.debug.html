@@ -5570,13 +5570,11 @@ var _gethostbyname_r; // stub for _gethostbyname_r
         function handleMessage(message) {
           var header = new Uint16Array(message, 0, 2);
           if(Sockets.peer.binds[header[1]]) {          
-            Sockets.peer.binds[header[1]].inQueue.push(message);
+            //Sockets.peer.binds[header[1]].inQueue.push(message);
+            var queue = Sockets.peer.binds[header[1]].inQueue;
+            var ptr = Sockets.peer.binds[header[1]].inQueuePtr;
+            queue[ptr ++] = message;
             // console.log(Sockets.peer.binds[header[1]].inQueue.length + " messages queued for recv (onload)");
-  
-            var queueLength = Sockets.peer.binds[header[1]].inQueue.length;
-            if(queueLength > 30) {
-              console.warn("message queue is getting long: ", queueLength);
-            }
           } else {
             console.log("unable to deliver message");
           }        
@@ -5592,11 +5590,14 @@ var _gethostbyname_r; // stub for _gethostbyname_r
         Sockets.peer.pc = pc;
       }
   
+      var INCOMING_QUEUE_LENGTH = 64;
+  
       Sockets.fds[fd] = {
         addr: 0x0100007f,
         host: '127.0.0.1',
         port: 0,
-        inQueue: [],
+        inQueue: new Array(INCOMING_QUEUE_LENGTH),
+        inQueuePtr: 0,
         header: new Uint16Array(2),
         bound: false
       };
