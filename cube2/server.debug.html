@@ -8804,6 +8804,8 @@ var _gethostbyname_r; // stub for _gethostbyname_r
   			getUserMedia = navigator.mozGetUserMedia.bind(navigator);
   		else if(navigator.webkitGetUserMedia)
   			getUserMedia = navigator.webkitGetUserMedia.bind(navigator);
+  		else
+  			throw new Error('getUserMedia not supported');
   	} else {
   		getUserMedia = navigator.getUserMedia.bind(navigator);
   	}
@@ -8847,6 +8849,16 @@ var _gethostbyname_r; // stub for _gethostbyname_r
     var UNRELIABLE_CHANNEL_OPTIONS = {
       outOfOrderAllowed: true,
       maxRetransmitNum: 0
+    };
+  
+    function PendingConnectionAbortError(message) {
+      this.name = "PendingConnectionAbortError";
+      this.message = (message || "");
+  	}
+  	PendingConnectionAbortError.prototype = Error.prototype;
+  
+    var E = {
+    	PendingConnectionAbortError: PendingConnectionAbortError
     };
   
     function WebSocketBroker(brokerUrl) {
@@ -9141,6 +9153,9 @@ var _gethostbyname_r; // stub for _gethostbyname_r
   
   		this.initialize(setRemote);
   	};
+  	WebRTCConnectProtocol.prototype.handleAbort = function handleAbort() {
+  		fail(this, 'onerror', new Error(E.WebRTCConnectProtocolAbort));
+  	};
   	WebRTCConnectProtocol.prototype.process = function process(message) {
   		var that = this;
   
@@ -9166,6 +9181,10 @@ var _gethostbyname_r; // stub for _gethostbyname_r
   					'sdp': message['description']
   				};
   				this.handleAnswer(answer);
+  				break;
+  
+  			case 'abort':
+  				this.handleAbort();
   				break;
   
   			default:
@@ -9221,7 +9240,7 @@ var _gethostbyname_r; // stub for _gethostbyname_r
   				return
         this.connectionTimer = null;
         if(false === messageFlag) {
-          console.log('sending ping');
+          // console.log('sending ping');
           control.send('PING');
           this.pingTimer = window.setTimeout(handlePingTimeoutExpired, options['pingTimeout']);
         } else {
@@ -9284,12 +9303,12 @@ var _gethostbyname_r; // stub for _gethostbyname_r
             if(that.connected) {
               var message = event.data;
               if('PING' === message) {
-                console.log('received ping, sending pong');
+                // console.log('received ping, sending pong');
                 control.send('PONG');
               } else if('PONG' === message) {
-                console.log('received pong');
+                // console.log('received pong');
               } else if('QUIT' === message) {
-                console.log('received quit');
+                // console.log('received quit');
                 that.close();
               }
             }
@@ -9327,12 +9346,12 @@ var _gethostbyname_r; // stub for _gethostbyname_r
               if(that.connected) {
                 var message = event.data;
                 if('PING' === message) {
-                  console.log('received ping, sending pong');
+                  // console.log('received ping, sending pong');
                   control.send('PONG');
                 } else if('PONG' === message) {
-                  console.log('received pong');
+                  // console.log('received pong');
                 } else if('QUIT' === message) {
-                  console.log('received quit');
+                  // console.log('received quit');
                   that.connected = false;
                   that.close();
                 }
@@ -9376,6 +9395,18 @@ var _gethostbyname_r; // stub for _gethostbyname_r
   		callback(this, 'ondisconnect', []);
   	};
   
+  	function PendingConnection(route, incoming) {
+  		this.route = route;
+  		this.incoming = incoming;
+  		this.proceed = true;
+  	};
+  	PendingConnection.prototype.accept = function accept() {
+  		this.proceed = true;
+  	};
+  	PendingConnection.prototype.reject = function reject() {
+  		this.proceed = false;
+  	};
+  
   	function Peer(brokerUrl, options) {
   		var that = this;
   		this.brokerUrl = brokerUrl;
@@ -9416,11 +9447,16 @@ var _gethostbyname_r; // stub for _gethostbyname_r
   					fail(that, 'onerror', 'pending connection but peer is not listening');
   					return;
   				}
-  				callback(that, 'onpending', [from]);
+  
+  				var pendingConnection = new PendingConnection(from, /*incoming*/ true);
+  				callback(that, 'onpending', [pendingConnection]);
+  				if(!pendingConnection.accept)
+  					return;
+  
   				handshake = that.pending[from] = new WebRTCConnectProtocol(that.options);
   				handshake.oncomplete = function(connection) {
   					delete that.pending[from];
-  					connection.route = from;
+  					connection['route'] = from;
   					connection.onconnect = function() {
   						callback(that, 'onconnection', [connection]);
   					};
@@ -9430,7 +9466,7 @@ var _gethostbyname_r; // stub for _gethostbyname_r
   				};
   				handshake.onerror = function(error) {
   					delete that.pending[from];
-  					callback(that, 'onerror', [error])
+  					callback(that, 'onerror', [error]);
   				};
   			} else {
   				handshake = that.pending[from];
@@ -9463,11 +9499,15 @@ var _gethostbyname_r; // stub for _gethostbyname_r
   		if(this.pending.hasOwnProperty(route))
   			throw new Error('already connecting to this host'); // FIXME: we can handle this better
   
-  		callback(that, 'onpending', [route]);
+  		var pendingConnection = new PendingConnection(route, /*incoming*/ false);
+  		callback(that, 'onpending', [pendingConnection]);
+  		if(!pendingConnection.accept)
+  			return;
+  
   		var handshake = this.pending[route] = new WebRTCConnectProtocol(this.options);
   		handshake.oncomplete = function(connection) {
   			delete that.pending[route];
-  			connection.route = route;
+  			connection['route'] = route;
   			connection.onconnect = function() {
   				callback(that, 'onconnection', [connection]);
   			};
@@ -9482,11 +9522,12 @@ var _gethostbyname_r; // stub for _gethostbyname_r
   
   		handshake.initiate();
   	};
+  	Peer.E = E;
   
   	return Peer;
   
   })(window);;
-  var Sockets={BACKEND_WEBSOCKETS:0,BACKEND_WEBRTC:1,BUFFER_SIZE:10240,MAX_BUFFER_SIZE:10485760,backend:1,nextFd:1,fds:{},nextport:1,maxport:65535,peer:null,connections:{},portmap:{},addrPool:[,33554442,50331658,67108874,83886090,100663306,117440522,134217738,150994954,167772170,184549386,201326602,218103818,234881034],sockaddr_in_layout:{__size__:16,sin_family:0,sin_port:2,sin_addr:4,sin_zero:8},msghdr_layout:{__size__:28,msg_name:0,msg_namelen:4,msg_iov:8,msg_iovlen:12,msg_control:16,msg_controllen:20,msg_flags:24}};
+  var Sockets={BACKEND_WEBSOCKETS:0,BACKEND_WEBRTC:1,BUFFER_SIZE:10240,MAX_BUFFER_SIZE:10485760,backend:1,nextFd:1,fds:{},nextport:1,maxport:65535,peer:null,connections:{},portmap:{},localAddr:4261412874,addrPool:[33554442,50331658,67108874,83886090,100663306,117440522,134217738,150994954,167772170,184549386,201326602,218103818,234881034],sockaddr_in_layout:{__size__:16,sin_family:0,sin_port:2,sin_addr:4,sin_zero:8},msghdr_layout:{__size__:28,msg_name:0,msg_namelen:4,msg_iov:8,msg_iovlen:12,msg_control:16,msg_controllen:20,msg_flags:24}};
   
   function _mkport() {
       for(var i = 0; i < Sockets.maxport; ++ i) {
@@ -9502,13 +9543,13 @@ var _gethostbyname_r; // stub for _gethostbyname_r
       if (!info) return -1;
       if(addr) {
         info.port = _ntohs(getValue(addr + Sockets.sockaddr_in_layout.sin_port, 'i16'));
-        info.addr = 0x0f00000a; // 10.0.0.15
         // info.addr = getValue(addr + Sockets.sockaddr_in_layout.sin_addr, 'i32');
-        info.host = __inet_ntop_raw(info.addr);
       }
       if(!info.port) {
         info.port = _mkport();
       }
+      info.addr = Sockets.localAddr; // 10.0.0.254
+      info.host = __inet_ntop_raw(info.addr);
       info.close = function() {
         Sockets.portmap[info.port] = undefined;
       }
@@ -9561,26 +9602,44 @@ var _gethostbyname_r; // stub for _gethostbyname_r
   
       // Open the peer connection if we don't have it already
       if(null == Sockets.peer) {
+        var host = Module['host'];
         var broker = Module['webrtc']['broker'] || 'http://wrtcb.jit.su:80';
         var route = Module['webrtc']['session'];
         var peer = new Peer(broker);
+        var url = window.location.toString();
+        url = clearQuery(url, 'serve');
+        url = clearQuery(url, 'windowed');
+        var listenOptions = {
+          'url': url,
+          'listed': true,
+          'metadata': {
+            'name': 'BananaBread',
+            'connected': 1,
+            'connect-limit': Module['maxpeers']
+          }
+        };
         peer.onconnection = function(connection) {
           console.log('connected');
           var addr;
           // Assign 10.0.0.1 to the host
-          if(route && route === connection.route) {
+          if(route && route === connection['route']) {
             addr = 0x0100000a; // 10.0.0.1
           } else {
             addr = Sockets.addrPool.shift();
           }
-          connection.addr = addr;
+          connection['addr'] = addr;
           Sockets.connections[addr] = connection;
           connection.ondisconnect = function() {
             console.log('disconnect');
             // Don't return the host address (10.0.0.1) to the pool
-            if(!(route && route === Sockets.connections[addr].route))
+            if(!(route && route === Sockets.connections[addr]['route']))
               Sockets.addrPool.push(addr);
             delete Sockets.connections[addr];
+  
+            if(host) {
+              -- listenOptions['metadata']['connected'];
+              peer.listen(listenOptions);
+            }
           };
           connection.onerror = function(error) {
             console.error(error);
@@ -9589,25 +9648,33 @@ var _gethostbyname_r; // stub for _gethostbyname_r
             handleMessage(addr, message.data);
           }
         };
-        peer.onpending = function(route) {
-          console.log('pending from: ', route);
-        };
-        if(route) {
-          peer.connect(route);
-        } else {
-          var url = window.location.toString();
-          url = clearQuery(url, 'serve');
-          url = clearQuery(url, 'windowed');
-          var options = {
-            'url': url,
-            'listed': true,
-            'metadata': {
-              'name': 'BananaBread'
+        peer.onpending = function(pending) {
+          console.log('pending from: ', pending['route'], '; initiated by: ', (pending['incoming']) ? 'remote' : 'local');
+          if(host) {
+            if(listenOptions['metadata']['connected'] < Module['maxpeers']) {
+              pending.accept();
+              ++ listenOptions['metadata']['connected'];
+              peer.listen(listenOptions);
+            } else {
+              pending.reject();
             }
-          };
+          }
+        };
+        peer.onerror = function(error) {
+          if(host) {
+            if(error instanceof Peer.E.PendingConnectionAbortError) {
+              -- listenOptions['metadata']['connected'];
+              peer.listen(listenOptions);
+            }
+          }
+        };
+        if(!host && route) {
+          peer.connect(route);
+  
+        } else {
           peer.onroute = function(route) {
             console.log(route);
-            peer.listen(options);
+            peer.listen(listenOptions);
           }
         }
         function handleMessage(addr, message) {
