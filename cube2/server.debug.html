@@ -8854,11 +8854,18 @@ var _gethostbyname_r; // stub for _gethostbyname_r
     function PendingConnectionAbortError(message) {
       this.name = "PendingConnectionAbortError";
       this.message = (message || "");
-  	}
+  	};
   	PendingConnectionAbortError.prototype = Error.prototype;
   
+  	function ConnectionFailedError(message) {
+  		this.name = "ConnectionFailedError";
+      this.message = (message || "");
+  	};
+  	ConnectionFailedError.prototype = Error.prototype;
+  
     var E = {
-    	PendingConnectionAbortError: PendingConnectionAbortError
+    	PendingConnectionAbortError: PendingConnectionAbortError,
+    	ConnectionFailedError: ConnectionFailedError
     };
   
     function WebSocketBroker(brokerUrl) {
@@ -8988,6 +8995,9 @@ var _gethostbyname_r; // stub for _gethostbyname_r
   	};
   	var nextDataConnectionPort = 1;
   	function WebRTCConnectProtocol(options) {
+  		var that = this;
+  		this.connectionTimeout = 10 * ONE_SECOND;
+  		this.pingTimeout = 1 * ONE_SECOND;
   		this.onmessage = null;
   		this.oncomplete = null;
   		this.onerror = null;
@@ -9003,6 +9013,34 @@ var _gethostbyname_r; // stub for _gethostbyname_r
   		};
   
   		this.peerConnection = null;
+  
+  		this.messageFlag = false;
+  		this.connectionTimer = null;
+  		this.pingTimer = null;
+  
+  		this.handleConnectionTimerExpired = function handleConnectionTimerExpired() {
+  			if(that.complete)
+  				return;
+  	    that.connectionTimer = null;
+  	    if(false === that.messageFlag) {
+  	      callback(that, 'onmessage', {type: 'ping'});
+  	      that.pingTimer = window.setTimeout(that.handlePingTimerExpired, that['pingTimeout']);
+  	    } else {
+  	      that.messageFlag = false;
+  	      that.connectionTimer = window.setTimeout(handleConnectionTimerExpired, that['connectionTimeout']);
+  	    }
+  	  };
+  	  this.handlePingTimerExpired = function handlePingTimerExpired() {
+  	  	if(that.complete)
+  	  		return;
+  	    that.pingTimer = null;
+  	    if(false === that.messageFlag) {
+  	    	fail(that, 'onerror');
+  	    } else {
+  	      that.messageFlag = false;
+  	      that.connectionTimer = window.setTimeout(that.handleConnectionTimerExpired, that['connectionTimeout']);
+  	    }
+  	  };
   	};
   	WebRTCConnectProtocol.prototype.initialize = function(cb) {
   		var that = this;
@@ -9035,6 +9073,7 @@ var _gethostbyname_r; // stub for _gethostbyname_r
   				function(stream) {
   					that.peerConnection.addStream(stream);
   					that.options.streams['local'] = stream;
+  					that.connectionTimer = window.setTimeout(that.handleConnectionTimerExpired, that['connectionTimeout']);
   					cb();
   				},
   				function(error) {
@@ -9128,6 +9167,7 @@ var _gethostbyname_r; // stub for _gethostbyname_r
   					'port': that.options.ports.local
   				};
   				callback(that, 'onmessage', message);
+  				that.complete = true;
   				var connection = new Connection(that.peerConnection, that.options, false);
   				callback(that, 'oncomplete', [connection]);
   			};
@@ -9147,6 +9187,7 @@ var _gethostbyname_r; // stub for _gethostbyname_r
   		};
   
   		function complete() {
+  			that.complete = true;
   			var connection = new Connection(that.peerConnection, that.options, true);
   			callback(that, 'oncomplete', [connection]);
   		};
@@ -9159,6 +9200,7 @@ var _gethostbyname_r; // stub for _gethostbyname_r
   	WebRTCConnectProtocol.prototype.process = function process(message) {
   		var that = this;
   
+  		this.messageFlag = true;
   		var type = message['type'];
   		switch(type) {
   			case 'ice':
@@ -9185,6 +9227,13 @@ var _gethostbyname_r; // stub for _gethostbyname_r
   
   			case 'abort':
   				this.handleAbort();
+  				break;
+  
+  			case 'ping':
+  			  callback(that, 'onmessage', {type: 'pong'});
+  			  break;
+  
+  			case 'pong':
   				break;
   
   			default:
@@ -9225,30 +9274,34 @@ var _gethostbyname_r; // stub for _gethostbyname_r
   		var opened = 0;
   		function handleOpen(event) {
   			++ opened;
-  			if(3 === opened) {
-  				that.connected = true;
-  				this.connectionTimer = window.setTimeout(handleConnectionTimeoutExpired, options['connectionTimeout']);
-  				callback(that, 'onconnect', []);
-  			}
+  			if(3 === opened)
+          handleConnect();
   		};
+  
+      function handleConnect() {
+        that.connected = true;
+        that.connectionTimer = window.setTimeout(handleConnectionTimerExpired, options['connectionTimeout']);
+        callback(that, 'onconnect', []);
+      };
   
   		var messageFlag = false;
   		this.connectionTimer = null;
   		this.pingTimer = null;
-  		function handleConnectionTimeoutExpired() {
+  		this.setupTimer = null;
+  		function handleConnectionTimerExpired() {
   			if(!that.connected)
   				return
         this.connectionTimer = null;
         if(false === messageFlag) {
           // console.log('sending ping');
           control.send('PING');
-          this.pingTimer = window.setTimeout(handlePingTimeoutExpired, options['pingTimeout']);
+          this.pingTimer = window.setTimeout(handlePingTimerExpired, options['pingTimeout']);
         } else {
           messageFlag = false;
-          this.connectionTimer = window.setTimeout(handleConnectionTimeoutExpired, options['connectionTimeout']);
+          this.connectionTimer = window.setTimeout(handleConnectionTimerExpired, options['connectionTimeout']);
         }
       };
-      function handlePingTimeoutExpired() {
+      function handlePingTimerExpired() {
       	if(!that.connected)
   				return
         this.pingTimer = null;
@@ -9257,8 +9310,14 @@ var _gethostbyname_r; // stub for _gethostbyname_r
           that.close();
         } else {
           messageFlag = false;
-          this.connectionTimer = window.setTimeout(handleConnectionTimeoutExpired, options['connectionTimeout']);
+          this.connectionTimer = window.setTimeout(handleConnectionTimerExpired, options['connectionTimeout']);
         }
+      };
+      function handleSetupTimerExpired() {
+      	if(!that.connected) {
+      		that.close();
+      		fail(that, 'onerror', new ConnectionFailedError());
+      	}
       };
   
   		if(initiate) {
@@ -9367,14 +9426,13 @@ var _gethostbyname_r; // stub for _gethostbyname_r
             channel.binaryType = 'arraybuffer';
           }
   
-          if(reliable && unreliable && control) {
-            that.connected = true;
-            this.connectionTimer = window.setTimeout(handleConnectionTimeoutExpired, options['connectionTimeout']);
-            callback(that, 'onconnect', []);
-          }
+          if(reliable && unreliable && control)
+          	handleConnect();
   			};
   			that.peerConnection.connectDataConnection(options.ports.local, options.ports.remote);
   		}
+  
+  		this.setupTimer = window.setTimeout(handleSetupTimerExpired, 20 * ONE_SECOND);
   	};
   	Connection.prototype.close = function close() {
   		console.log('close connection');
@@ -9458,7 +9516,12 @@ var _gethostbyname_r; // stub for _gethostbyname_r
   					delete that.pending[from];
   					connection['route'] = from;
   					connection.onconnect = function() {
+  						connection.onconnect = null;
+  						connection.onerror = null;
   						callback(that, 'onconnection', [connection]);
+  					};
+  					connection.onerror = function(error) {
+  						fail(that, 'onerror', error);
   					};
   				};
   				handshake.onmessage = function(message) {
@@ -9662,7 +9725,8 @@ var _gethostbyname_r; // stub for _gethostbyname_r
         };
         peer.onerror = function(error) {
           if(host) {
-            if(error instanceof Peer.E.PendingConnectionAbortError) {
+            if(error instanceof Peer.E.PendingConnectionAbortError ||
+               error instanceof Peer.E.ConnectionFailedError) {
               -- listenOptions['metadata']['connected'];
               peer.listen(listenOptions);
             }
