@@ -317,10 +317,26 @@ Module['FS_createPath']('/packages/gk/cyber', 'glow_colors', true, true);
     filePreload17.send(null);
 
     var filePreload18 = new DataRequest();
-    filePreload18.open('GET', 'packages/gk/cyber/cybersky/gkskycyber_bk.jpg', true);
+    filePreload18.open('GET', 'packages/gk/cyber/cybersky/gkskycyber_rt.png', true);
     filePreload18.responseType = 'arraybuffer';
     filePreload18.onload = function() {
       var arrayBuffer = filePreload18.response;
+      assert(arrayBuffer, 'Loading file packages/gk/cyber/cybersky/gkskycyber_rt.png failed.');
+      var byteArray = !arrayBuffer.subarray ? new Uint8Array(arrayBuffer) : arrayBuffer;
+      
+      Module['FS_createPreloadedFile']('/packages/gk/cyber/cybersky', 'gkskycyber_rt.png', byteArray, true, true, function() {
+        Module['removeRunDependency']('fp packages/gk/cyber/cybersky/gkskycyber_rt.png');
+
+      });
+    };
+    Module['addRunDependency']('fp packages/gk/cyber/cybersky/gkskycyber_rt.png');
+    filePreload18.send(null);
+
+    var filePreload19 = new DataRequest();
+    filePreload19.open('GET', 'packages/gk/cyber/cybersky/gkskycyber_bk.jpg', true);
+    filePreload19.responseType = 'arraybuffer';
+    filePreload19.onload = function() {
+      var arrayBuffer = filePreload19.response;
       assert(arrayBuffer, 'Loading file packages/gk/cyber/cybersky/gkskycyber_bk.jpg failed.');
       var byteArray = !arrayBuffer.subarray ? new Uint8Array(arrayBuffer) : arrayBuffer;
       
@@ -330,13 +346,29 @@ Module['FS_createPath']('/packages/gk/cyber', 'glow_colors', true, true);
       });
     };
     Module['addRunDependency']('fp packages/gk/cyber/cybersky/gkskycyber_bk.jpg');
-    filePreload18.send(null);
+    filePreload19.send(null);
 
-    var filePreload19 = new DataRequest();
-    filePreload19.open('GET', 'packages/gk/cyber/cybersky/gkskycyber_rt.jpg', true);
-    filePreload19.responseType = 'arraybuffer';
-    filePreload19.onload = function() {
-      var arrayBuffer = filePreload19.response;
+    var filePreload20 = new DataRequest();
+    filePreload20.open('GET', 'packages/gk/cyber/cybersky/gkskycyber_lf.png', true);
+    filePreload20.responseType = 'arraybuffer';
+    filePreload20.onload = function() {
+      var arrayBuffer = filePreload20.response;
+      assert(arrayBuffer, 'Loading file packages/gk/cyber/cybersky/gkskycyber_lf.png failed.');
+      var byteArray = !arrayBuffer.subarray ? new Uint8Array(arrayBuffer) : arrayBuffer;
+      
+      Module['FS_createPreloadedFile']('/packages/gk/cyber/cybersky', 'gkskycyber_lf.png', byteArray, true, true, function() {
+        Module['removeRunDependency']('fp packages/gk/cyber/cybersky/gkskycyber_lf.png');
+
+      });
+    };
+    Module['addRunDependency']('fp packages/gk/cyber/cybersky/gkskycyber_lf.png');
+    filePreload20.send(null);
+
+    var filePreload21 = new DataRequest();
+    filePreload21.open('GET', 'packages/gk/cyber/cybersky/gkskycyber_rt.jpg', true);
+    filePreload21.responseType = 'arraybuffer';
+    filePreload21.onload = function() {
+      var arrayBuffer = filePreload21.response;
       assert(arrayBuffer, 'Loading file packages/gk/cyber/cybersky/gkskycyber_rt.jpg failed.');
       var byteArray = !arrayBuffer.subarray ? new Uint8Array(arrayBuffer) : arrayBuffer;
       
@@ -346,13 +378,13 @@ Module['FS_createPath']('/packages/gk/cyber', 'glow_colors', true, true);
       });
     };
     Module['addRunDependency']('fp packages/gk/cyber/cybersky/gkskycyber_rt.jpg');
-    filePreload19.send(null);
+    filePreload21.send(null);
 
-    var filePreload20 = new DataRequest();
-    filePreload20.open('GET', 'packages/gk/cyber/cybersky/gkskycyber_dn.jpg', true);
-    filePreload20.responseType = 'arraybuffer';
-    filePreload20.onload = function() {
-      var arrayBuffer = filePreload20.response;
+    var filePreload22 = new DataRequest();
+    filePreload22.open('GET', 'packages/gk/cyber/cybersky/gkskycyber_dn.jpg', true);
+    filePreload22.responseType = 'arraybuffer';
+    filePreload22.onload = function() {
+      var arrayBuffer = filePreload22.response;
       assert(arrayBuffer, 'Loading file packages/gk/cyber/cybersky/gkskycyber_dn.jpg failed.');
       var byteArray = !arrayBuffer.subarray ? new Uint8Array(arrayBuffer) : arrayBuffer;
       
@@ -362,13 +394,13 @@ Module['FS_createPath']('/packages/gk/cyber', 'glow_colors', true, true);
       });
     };
     Module['addRunDependency']('fp packages/gk/cyber/cybersky/gkskycyber_dn.jpg');
-    filePreload20.send(null);
+    filePreload22.send(null);
 
-    var filePreload21 = new DataRequest();
-    filePreload21.open('GET', 'packages/gk/cyber/cybersky/gkskycyber_lf.jpg', true);
-    filePreload21.responseType = 'arraybuffer';
-    filePreload21.onload = function() {
-      var arrayBuffer = filePreload21.response;
+    var filePreload23 = new DataRequest();
+    filePreload23.open('GET', 'packages/gk/cyber/cybersky/gkskycyber_lf.jpg', true);
+    filePreload23.responseType = 'arraybuffer';
+    filePreload23.onload = function() {
+      var arrayBuffer = filePreload23.response;
       assert(arrayBuffer, 'Loading file packages/gk/cyber/cybersky/gkskycyber_lf.jpg failed.');
       var byteArray = !arrayBuffer.subarray ? new Uint8Array(arrayBuffer) : arrayBuffer;
       
@@ -378,13 +410,29 @@ Module['FS_createPath']('/packages/gk/cyber', 'glow_colors', true, true);
       });
     };
     Module['addRunDependency']('fp packages/gk/cyber/cybersky/gkskycyber_lf.jpg');
-    filePreload21.send(null);
+    filePreload23.send(null);
 
-    var filePreload22 = new DataRequest();
-    filePreload22.open('GET', 'packages/gk/cyber/cybersky/gkskycyber_ft.jpg', true);
-    filePreload22.responseType = 'arraybuffer';
-    filePreload22.onload = function() {
-      var arrayBuffer = filePreload22.response;
+    var filePreload24 = new DataRequest();
+    filePreload24.open('GET', 'packages/gk/cyber/cybersky/gkskycyber_ft.png', true);
+    filePreload24.responseType = 'arraybuffer';
+    filePreload24.onload = function() {
+      var arrayBuffer = filePreload24.response;
+      assert(arrayBuffer, 'Loading file packages/gk/cyber/cybersky/gkskycyber_ft.png failed.');
+      var byteArray = !arrayBuffer.subarray ? new Uint8Array(arrayBuffer) : arrayBuffer;
+      
+      Module['FS_createPreloadedFile']('/packages/gk/cyber/cybersky', 'gkskycyber_ft.png', byteArray, true, true, function() {
+        Module['removeRunDependency']('fp packages/gk/cyber/cybersky/gkskycyber_ft.png');
+
+      });
+    };
+    Module['addRunDependency']('fp packages/gk/cyber/cybersky/gkskycyber_ft.png');
+    filePreload24.send(null);
+
+    var filePreload25 = new DataRequest();
+    filePreload25.open('GET', 'packages/gk/cyber/cybersky/gkskycyber_ft.jpg', true);
+    filePreload25.responseType = 'arraybuffer';
+    filePreload25.onload = function() {
+      var arrayBuffer = filePreload25.response;
       assert(arrayBuffer, 'Loading file packages/gk/cyber/cybersky/gkskycyber_ft.jpg failed.');
       var byteArray = !arrayBuffer.subarray ? new Uint8Array(arrayBuffer) : arrayBuffer;
       
@@ -394,13 +442,29 @@ Module['FS_createPath']('/packages/gk/cyber', 'glow_colors', true, true);
       });
     };
     Module['addRunDependency']('fp packages/gk/cyber/cybersky/gkskycyber_ft.jpg');
-    filePreload22.send(null);
+    filePreload25.send(null);
 
-    var filePreload23 = new DataRequest();
-    filePreload23.open('GET', 'packages/gk/cyber/cybersky/gkskycyber_up.jpg', true);
-    filePreload23.responseType = 'arraybuffer';
-    filePreload23.onload = function() {
-      var arrayBuffer = filePreload23.response;
+    var filePreload26 = new DataRequest();
+    filePreload26.open('GET', 'packages/gk/cyber/cybersky/gkskycyber_bk.png', true);
+    filePreload26.responseType = 'arraybuffer';
+    filePreload26.onload = function() {
+      var arrayBuffer = filePreload26.response;
+      assert(arrayBuffer, 'Loading file packages/gk/cyber/cybersky/gkskycyber_bk.png failed.');
+      var byteArray = !arrayBuffer.subarray ? new Uint8Array(arrayBuffer) : arrayBuffer;
+      
+      Module['FS_createPreloadedFile']('/packages/gk/cyber/cybersky', 'gkskycyber_bk.png', byteArray, true, true, function() {
+        Module['removeRunDependency']('fp packages/gk/cyber/cybersky/gkskycyber_bk.png');
+
+      });
+    };
+    Module['addRunDependency']('fp packages/gk/cyber/cybersky/gkskycyber_bk.png');
+    filePreload26.send(null);
+
+    var filePreload27 = new DataRequest();
+    filePreload27.open('GET', 'packages/gk/cyber/cybersky/gkskycyber_up.jpg', true);
+    filePreload27.responseType = 'arraybuffer';
+    filePreload27.onload = function() {
+      var arrayBuffer = filePreload27.response;
       assert(arrayBuffer, 'Loading file packages/gk/cyber/cybersky/gkskycyber_up.jpg failed.');
       var byteArray = !arrayBuffer.subarray ? new Uint8Array(arrayBuffer) : arrayBuffer;
       
@@ -410,13 +474,45 @@ Module['FS_createPath']('/packages/gk/cyber', 'glow_colors', true, true);
       });
     };
     Module['addRunDependency']('fp packages/gk/cyber/cybersky/gkskycyber_up.jpg');
-    filePreload23.send(null);
+    filePreload27.send(null);
 
-    var filePreload24 = new DataRequest();
-    filePreload24.open('GET', 'packages/gk/cyber/glow_colors/glow_color_box_01_gc.png', true);
-    filePreload24.responseType = 'arraybuffer';
-    filePreload24.onload = function() {
-      var arrayBuffer = filePreload24.response;
+    var filePreload28 = new DataRequest();
+    filePreload28.open('GET', 'packages/gk/cyber/cybersky/gkskycyber_up.png', true);
+    filePreload28.responseType = 'arraybuffer';
+    filePreload28.onload = function() {
+      var arrayBuffer = filePreload28.response;
+      assert(arrayBuffer, 'Loading file packages/gk/cyber/cybersky/gkskycyber_up.png failed.');
+      var byteArray = !arrayBuffer.subarray ? new Uint8Array(arrayBuffer) : arrayBuffer;
+      
+      Module['FS_createPreloadedFile']('/packages/gk/cyber/cybersky', 'gkskycyber_up.png', byteArray, true, true, function() {
+        Module['removeRunDependency']('fp packages/gk/cyber/cybersky/gkskycyber_up.png');
+
+      });
+    };
+    Module['addRunDependency']('fp packages/gk/cyber/cybersky/gkskycyber_up.png');
+    filePreload28.send(null);
+
+    var filePreload29 = new DataRequest();
+    filePreload29.open('GET', 'packages/gk/cyber/cybersky/gkskycyber_dn.png', true);
+    filePreload29.responseType = 'arraybuffer';
+    filePreload29.onload = function() {
+      var arrayBuffer = filePreload29.response;
+      assert(arrayBuffer, 'Loading file packages/gk/cyber/cybersky/gkskycyber_dn.png failed.');
+      var byteArray = !arrayBuffer.subarray ? new Uint8Array(arrayBuffer) : arrayBuffer;
+      
+      Module['FS_createPreloadedFile']('/packages/gk/cyber/cybersky', 'gkskycyber_dn.png', byteArray, true, true, function() {
+        Module['removeRunDependency']('fp packages/gk/cyber/cybersky/gkskycyber_dn.png');
+
+      });
+    };
+    Module['addRunDependency']('fp packages/gk/cyber/cybersky/gkskycyber_dn.png');
+    filePreload29.send(null);
+
+    var filePreload30 = new DataRequest();
+    filePreload30.open('GET', 'packages/gk/cyber/glow_colors/glow_color_box_01_gc.png', true);
+    filePreload30.responseType = 'arraybuffer';
+    filePreload30.onload = function() {
+      var arrayBuffer = filePreload30.response;
       assert(arrayBuffer, 'Loading file packages/gk/cyber/glow_colors/glow_color_box_01_gc.png failed.');
       var byteArray = !arrayBuffer.subarray ? new Uint8Array(arrayBuffer) : arrayBuffer;
       
@@ -426,13 +522,13 @@ Module['FS_createPath']('/packages/gk/cyber', 'glow_colors', true, true);
       });
     };
     Module['addRunDependency']('fp packages/gk/cyber/glow_colors/glow_color_box_01_gc.png');
-    filePreload24.send(null);
+    filePreload30.send(null);
 
-    var filePreload25 = new DataRequest();
-    filePreload25.open('GET', 'packages/gk/cyber/glow_colors/glow_color_05.png', true);
-    filePreload25.responseType = 'arraybuffer';
-    filePreload25.onload = function() {
-      var arrayBuffer = filePreload25.response;
+    var filePreload31 = new DataRequest();
+    filePreload31.open('GET', 'packages/gk/cyber/glow_colors/glow_color_05.png', true);
+    filePreload31.responseType = 'arraybuffer';
+    filePreload31.onload = function() {
+      var arrayBuffer = filePreload31.response;
       assert(arrayBuffer, 'Loading file packages/gk/cyber/glow_colors/glow_color_05.png failed.');
       var byteArray = !arrayBuffer.subarray ? new Uint8Array(arrayBuffer) : arrayBuffer;
       
@@ -442,13 +538,13 @@ Module['FS_createPath']('/packages/gk/cyber', 'glow_colors', true, true);
       });
     };
     Module['addRunDependency']('fp packages/gk/cyber/glow_colors/glow_color_05.png');
-    filePreload25.send(null);
+    filePreload31.send(null);
 
-    var filePreload26 = new DataRequest();
-    filePreload26.open('GET', 'packages/gk/cyber/glow_colors/glow_color_02.png', true);
-    filePreload26.responseType = 'arraybuffer';
-    filePreload26.onload = function() {
-      var arrayBuffer = filePreload26.response;
+    var filePreload32 = new DataRequest();
+    filePreload32.open('GET', 'packages/gk/cyber/glow_colors/glow_color_02.png', true);
+    filePreload32.responseType = 'arraybuffer';
+    filePreload32.onload = function() {
+      var arrayBuffer = filePreload32.response;
       assert(arrayBuffer, 'Loading file packages/gk/cyber/glow_colors/glow_color_02.png failed.');
       var byteArray = !arrayBuffer.subarray ? new Uint8Array(arrayBuffer) : arrayBuffer;
       
@@ -458,13 +554,13 @@ Module['FS_createPath']('/packages/gk/cyber', 'glow_colors', true, true);
       });
     };
     Module['addRunDependency']('fp packages/gk/cyber/glow_colors/glow_color_02.png');
-    filePreload26.send(null);
+    filePreload32.send(null);
 
-    var filePreload27 = new DataRequest();
-    filePreload27.open('GET', 'packages/gk/cyber/glow_colors/glow_color_box_01_cc.png', true);
-    filePreload27.responseType = 'arraybuffer';
-    filePreload27.onload = function() {
-      var arrayBuffer = filePreload27.response;
+    var filePreload33 = new DataRequest();
+    filePreload33.open('GET', 'packages/gk/cyber/glow_colors/glow_color_box_01_cc.png', true);
+    filePreload33.responseType = 'arraybuffer';
+    filePreload33.onload = function() {
+      var arrayBuffer = filePreload33.response;
       assert(arrayBuffer, 'Loading file packages/gk/cyber/glow_colors/glow_color_box_01_cc.png failed.');
       var byteArray = !arrayBuffer.subarray ? new Uint8Array(arrayBuffer) : arrayBuffer;
       
@@ -474,13 +570,13 @@ Module['FS_createPath']('/packages/gk/cyber', 'glow_colors', true, true);
       });
     };
     Module['addRunDependency']('fp packages/gk/cyber/glow_colors/glow_color_box_01_cc.png');
-    filePreload27.send(null);
+    filePreload33.send(null);
 
-    var filePreload28 = new DataRequest();
-    filePreload28.open('GET', 'packages/gk/cyber/glow_colors/Thumbs.db', true);
-    filePreload28.responseType = 'arraybuffer';
-    filePreload28.onload = function() {
-      var arrayBuffer = filePreload28.response;
+    var filePreload34 = new DataRequest();
+    filePreload34.open('GET', 'packages/gk/cyber/glow_colors/Thumbs.db', true);
+    filePreload34.responseType = 'arraybuffer';
+    filePreload34.onload = function() {
+      var arrayBuffer = filePreload34.response;
       assert(arrayBuffer, 'Loading file packages/gk/cyber/glow_colors/Thumbs.db failed.');
       var byteArray = !arrayBuffer.subarray ? new Uint8Array(arrayBuffer) : arrayBuffer;
       
@@ -490,13 +586,13 @@ Module['FS_createPath']('/packages/gk/cyber', 'glow_colors', true, true);
       });
     };
     Module['addRunDependency']('fp packages/gk/cyber/glow_colors/Thumbs.db');
-    filePreload28.send(null);
+    filePreload34.send(null);
 
-    var filePreload29 = new DataRequest();
-    filePreload29.open('GET', 'packages/gk/cyber/glow_colors/glow_color_01.png', true);
-    filePreload29.responseType = 'arraybuffer';
-    filePreload29.onload = function() {
-      var arrayBuffer = filePreload29.response;
+    var filePreload35 = new DataRequest();
+    filePreload35.open('GET', 'packages/gk/cyber/glow_colors/glow_color_01.png', true);
+    filePreload35.responseType = 'arraybuffer';
+    filePreload35.onload = function() {
+      var arrayBuffer = filePreload35.response;
       assert(arrayBuffer, 'Loading file packages/gk/cyber/glow_colors/glow_color_01.png failed.');
       var byteArray = !arrayBuffer.subarray ? new Uint8Array(arrayBuffer) : arrayBuffer;
       
@@ -506,13 +602,13 @@ Module['FS_createPath']('/packages/gk/cyber', 'glow_colors', true, true);
       });
     };
     Module['addRunDependency']('fp packages/gk/cyber/glow_colors/glow_color_01.png');
-    filePreload29.send(null);
+    filePreload35.send(null);
 
-    var filePreload30 = new DataRequest();
-    filePreload30.open('GET', 'packages/gk/cyber/glow_colors/package.cfg', true);
-    filePreload30.responseType = 'arraybuffer';
-    filePreload30.onload = function() {
-      var arrayBuffer = filePreload30.response;
+    var filePreload36 = new DataRequest();
+    filePreload36.open('GET', 'packages/gk/cyber/glow_colors/package.cfg', true);
+    filePreload36.responseType = 'arraybuffer';
+    filePreload36.onload = function() {
+      var arrayBuffer = filePreload36.response;
       assert(arrayBuffer, 'Loading file packages/gk/cyber/glow_colors/package.cfg failed.');
       var byteArray = !arrayBuffer.subarray ? new Uint8Array(arrayBuffer) : arrayBuffer;
       
@@ -522,13 +618,13 @@ Module['FS_createPath']('/packages/gk/cyber', 'glow_colors', true, true);
       });
     };
     Module['addRunDependency']('fp packages/gk/cyber/glow_colors/package.cfg');
-    filePreload30.send(null);
+    filePreload36.send(null);
 
-    var filePreload31 = new DataRequest();
-    filePreload31.open('GET', 'packages/gk/cyber/glow_colors/glow_color_nm.png', true);
-    filePreload31.responseType = 'arraybuffer';
-    filePreload31.onload = function() {
-      var arrayBuffer = filePreload31.response;
+    var filePreload37 = new DataRequest();
+    filePreload37.open('GET', 'packages/gk/cyber/glow_colors/glow_color_nm.png', true);
+    filePreload37.responseType = 'arraybuffer';
+    filePreload37.onload = function() {
+      var arrayBuffer = filePreload37.response;
       assert(arrayBuffer, 'Loading file packages/gk/cyber/glow_colors/glow_color_nm.png failed.');
       var byteArray = !arrayBuffer.subarray ? new Uint8Array(arrayBuffer) : arrayBuffer;
       
@@ -538,13 +634,13 @@ Module['FS_createPath']('/packages/gk/cyber', 'glow_colors', true, true);
       });
     };
     Module['addRunDependency']('fp packages/gk/cyber/glow_colors/glow_color_nm.png');
-    filePreload31.send(null);
+    filePreload37.send(null);
 
-    var filePreload32 = new DataRequest();
-    filePreload32.open('GET', 'packages/gk/cyber/glow_colors/glow_color_04.png', true);
-    filePreload32.responseType = 'arraybuffer';
-    filePreload32.onload = function() {
-      var arrayBuffer = filePreload32.response;
+    var filePreload38 = new DataRequest();
+    filePreload38.open('GET', 'packages/gk/cyber/glow_colors/glow_color_04.png', true);
+    filePreload38.responseType = 'arraybuffer';
+    filePreload38.onload = function() {
+      var arrayBuffer = filePreload38.response;
       assert(arrayBuffer, 'Loading file packages/gk/cyber/glow_colors/glow_color_04.png failed.');
       var byteArray = !arrayBuffer.subarray ? new Uint8Array(arrayBuffer) : arrayBuffer;
       
@@ -554,13 +650,13 @@ Module['FS_createPath']('/packages/gk/cyber', 'glow_colors', true, true);
       });
     };
     Module['addRunDependency']('fp packages/gk/cyber/glow_colors/glow_color_04.png');
-    filePreload32.send(null);
+    filePreload38.send(null);
 
-    var filePreload33 = new DataRequest();
-    filePreload33.open('GET', 'packages/gk/cyber/glow_colors/glow_color_03.png', true);
-    filePreload33.responseType = 'arraybuffer';
-    filePreload33.onload = function() {
-      var arrayBuffer = filePreload33.response;
+    var filePreload39 = new DataRequest();
+    filePreload39.open('GET', 'packages/gk/cyber/glow_colors/glow_color_03.png', true);
+    filePreload39.responseType = 'arraybuffer';
+    filePreload39.onload = function() {
+      var arrayBuffer = filePreload39.response;
       assert(arrayBuffer, 'Loading file packages/gk/cyber/glow_colors/glow_color_03.png failed.');
       var byteArray = !arrayBuffer.subarray ? new Uint8Array(arrayBuffer) : arrayBuffer;
       
@@ -570,13 +666,13 @@ Module['FS_createPath']('/packages/gk/cyber', 'glow_colors', true, true);
       });
     };
     Module['addRunDependency']('fp packages/gk/cyber/glow_colors/glow_color_03.png');
-    filePreload33.send(null);
+    filePreload39.send(null);
 
-    var filePreload34 = new DataRequest();
-    filePreload34.open('GET', 'packages/gk/cyber/glow_colors/glow_color_01_sc.png', true);
-    filePreload34.responseType = 'arraybuffer';
-    filePreload34.onload = function() {
-      var arrayBuffer = filePreload34.response;
+    var filePreload40 = new DataRequest();
+    filePreload40.open('GET', 'packages/gk/cyber/glow_colors/glow_color_01_sc.png', true);
+    filePreload40.responseType = 'arraybuffer';
+    filePreload40.onload = function() {
+      var arrayBuffer = filePreload40.response;
       assert(arrayBuffer, 'Loading file packages/gk/cyber/glow_colors/glow_color_01_sc.png failed.');
       var byteArray = !arrayBuffer.subarray ? new Uint8Array(arrayBuffer) : arrayBuffer;
       
@@ -586,7 +682,7 @@ Module['FS_createPath']('/packages/gk/cyber', 'glow_colors', true, true);
       });
     };
     Module['addRunDependency']('fp packages/gk/cyber/glow_colors/glow_color_01_sc.png');
-    filePreload34.send(null);
+    filePreload40.send(null);
 
     if (!Module.expectedDataFileDownloads) {
       Module.expectedDataFileDownloads = 0;
@@ -704,72 +800,96 @@ Module['FS_createPath']('/packages/gk/cyber', 'glow_colors', true, true);
         curr.response = byteArray.subarray(5344691,5347551);
         curr.onload();
       
+        curr = DataRequest.prototype.requests['packages/gk/cyber/cybersky/gkskycyber_rt.png'];
+        curr.response = byteArray.subarray(5347551,6262960);
+        curr.onload();
+      
         curr = DataRequest.prototype.requests['packages/gk/cyber/cybersky/gkskycyber_bk.jpg'];
-        curr.response = byteArray.subarray(5347551,5534063);
+        curr.response = byteArray.subarray(6262960,6449472);
+        curr.onload();
+      
+        curr = DataRequest.prototype.requests['packages/gk/cyber/cybersky/gkskycyber_lf.png'];
+        curr.response = byteArray.subarray(6449472,7369479);
         curr.onload();
       
         curr = DataRequest.prototype.requests['packages/gk/cyber/cybersky/gkskycyber_rt.jpg'];
-        curr.response = byteArray.subarray(5534063,5719745);
+        curr.response = byteArray.subarray(7369479,7555161);
         curr.onload();
       
         curr = DataRequest.prototype.requests['packages/gk/cyber/cybersky/gkskycyber_dn.jpg'];
-        curr.response = byteArray.subarray(5719745,5878322);
+        curr.response = byteArray.subarray(7555161,7713738);
         curr.onload();
       
         curr = DataRequest.prototype.requests['packages/gk/cyber/cybersky/gkskycyber_lf.jpg'];
-        curr.response = byteArray.subarray(5878322,6063973);
+        curr.response = byteArray.subarray(7713738,7899389);
+        curr.onload();
+      
+        curr = DataRequest.prototype.requests['packages/gk/cyber/cybersky/gkskycyber_ft.png'];
+        curr.response = byteArray.subarray(7899389,8823381);
         curr.onload();
       
         curr = DataRequest.prototype.requests['packages/gk/cyber/cybersky/gkskycyber_ft.jpg'];
-        curr.response = byteArray.subarray(6063973,6247407);
+        curr.response = byteArray.subarray(8823381,9006815);
+        curr.onload();
+      
+        curr = DataRequest.prototype.requests['packages/gk/cyber/cybersky/gkskycyber_bk.png'];
+        curr.response = byteArray.subarray(9006815,9935313);
         curr.onload();
       
         curr = DataRequest.prototype.requests['packages/gk/cyber/cybersky/gkskycyber_up.jpg'];
-        curr.response = byteArray.subarray(6247407,6421821);
+        curr.response = byteArray.subarray(9935313,10109727);
+        curr.onload();
+      
+        curr = DataRequest.prototype.requests['packages/gk/cyber/cybersky/gkskycyber_up.png'];
+        curr.response = byteArray.subarray(10109727,10969285);
+        curr.onload();
+      
+        curr = DataRequest.prototype.requests['packages/gk/cyber/cybersky/gkskycyber_dn.png'];
+        curr.response = byteArray.subarray(10969285,11818958);
         curr.onload();
       
         curr = DataRequest.prototype.requests['packages/gk/cyber/glow_colors/glow_color_box_01_gc.png'];
-        curr.response = byteArray.subarray(6421821,6427194);
+        curr.response = byteArray.subarray(11818958,11824331);
         curr.onload();
       
         curr = DataRequest.prototype.requests['packages/gk/cyber/glow_colors/glow_color_05.png'];
-        curr.response = byteArray.subarray(6427194,6430052);
+        curr.response = byteArray.subarray(11824331,11827189);
         curr.onload();
       
         curr = DataRequest.prototype.requests['packages/gk/cyber/glow_colors/glow_color_02.png'];
-        curr.response = byteArray.subarray(6430052,6432912);
+        curr.response = byteArray.subarray(11827189,11830049);
         curr.onload();
       
         curr = DataRequest.prototype.requests['packages/gk/cyber/glow_colors/glow_color_box_01_cc.png'];
-        curr.response = byteArray.subarray(6432912,6442489);
+        curr.response = byteArray.subarray(11830049,11839626);
         curr.onload();
       
         curr = DataRequest.prototype.requests['packages/gk/cyber/glow_colors/Thumbs.db'];
-        curr.response = byteArray.subarray(6442489,6448633);
+        curr.response = byteArray.subarray(11839626,11845770);
         curr.onload();
       
         curr = DataRequest.prototype.requests['packages/gk/cyber/glow_colors/glow_color_01.png'];
-        curr.response = byteArray.subarray(6448633,6451494);
+        curr.response = byteArray.subarray(11845770,11848631);
         curr.onload();
       
         curr = DataRequest.prototype.requests['packages/gk/cyber/glow_colors/package.cfg'];
-        curr.response = byteArray.subarray(6451494,6453247);
+        curr.response = byteArray.subarray(11848631,11850384);
         curr.onload();
       
         curr = DataRequest.prototype.requests['packages/gk/cyber/glow_colors/glow_color_nm.png'];
-        curr.response = byteArray.subarray(6453247,6456104);
+        curr.response = byteArray.subarray(11850384,11853241);
         curr.onload();
       
         curr = DataRequest.prototype.requests['packages/gk/cyber/glow_colors/glow_color_04.png'];
-        curr.response = byteArray.subarray(6456104,6458963);
+        curr.response = byteArray.subarray(11853241,11856100);
         curr.onload();
       
         curr = DataRequest.prototype.requests['packages/gk/cyber/glow_colors/glow_color_03.png'];
-        curr.response = byteArray.subarray(6458963,6461822);
+        curr.response = byteArray.subarray(11856100,11858959);
         curr.onload();
       
         curr = DataRequest.prototype.requests['packages/gk/cyber/glow_colors/glow_color_01_sc.png'];
-        curr.response = byteArray.subarray(6461822,6469684);
+        curr.response = byteArray.subarray(11858959,11866821);
         curr.onload();
                 Module['removeRunDependency']('datafile_four.data');
 
