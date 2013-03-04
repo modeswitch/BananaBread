@@ -1,0 +1,94 @@
+list.lo: list.c include/enet/enet.h \
+  /home/ack/work/emscripten/system/include/libc/stdlib.h \
+  /home/ack/work/emscripten/system/include/libc/machine/ieeefp.h \
+  /home/ack/work/emscripten/system/include/libc/_ansi.h \
+  /home/ack/work/emscripten/system/include/libc/newlib.h \
+  /home/ack/work/emscripten/system/include/libc/sys/config.h \
+  /home/ack/work/emscripten/system/include/libc/sys/features.h \
+  /home/ack/work/emscripten/system/include/libc/stddef.h \
+  /home/ack/work/emscripten/system/include/libc/sys/reent.h \
+  /home/ack/work/emscripten/system/include/libc/sys/_types.h \
+  /home/ack/work/emscripten/system/include/libc/machine/_types.h \
+  /home/ack/work/emscripten/system/include/libc/machine/_default_types.h \
+  /home/ack/work/emscripten/system/include/libc/sys/lock.h \
+  /home/ack/work/emscripten/system/include/libc/machine/stdlib.h \
+  /home/ack/work/emscripten/system/include/libc/alloca.h \
+  include/enet/unix.h \
+  /home/ack/work/emscripten/system/include/libc/sys/time.h \
+  /home/ack/work/emscripten/system/include/libc/sys/types.h \
+  /home/ack/work/emscripten/system/include/libc/machine/types.h \
+  /home/ack/work/emscripten/system/include/libc/stdint.h \
+  /home/ack/work/emscripten/system/include/libc/sys/sched.h \
+  /home/ack/work/emscripten/system/include/libc/time.h \
+  /home/ack/work/emscripten/system/include/libc/machine/time.h \
+  /home/ack/work/emscripten/system/include/libc/signal.h \
+  /home/ack/work/emscripten/system/include/libc/sys/signal.h \
+  /home/ack/work/emscripten/system/include/net/netinet/in.h \
+  /home/ack/work/emscripten/system/include/libc/unistd.h \
+  /home/ack/work/emscripten/system/include/libc/sys/unistd.h \
+  include/enet/types.h include/enet/protocol.h include/enet/list.h \
+  include/enet/callbacks.h
+
+include/enet/enet.h:
+
+/home/ack/work/emscripten/system/include/libc/stdlib.h:
+
+/home/ack/work/emscripten/system/include/libc/machine/ieeefp.h:
+
+/home/ack/work/emscripten/system/include/libc/_ansi.h:
+
+/home/ack/work/emscripten/system/include/libc/newlib.h:
+
+/home/ack/work/emscripten/system/include/libc/sys/config.h:
+
+/home/ack/work/emscripten/system/include/libc/sys/features.h:
+
+/home/ack/work/emscripten/system/include/libc/stddef.h:
+
+/home/ack/work/emscripten/system/include/libc/sys/reent.h:
+
+/home/ack/work/emscripten/system/include/libc/sys/_types.h:
+
+/home/ack/work/emscripten/system/include/libc/machine/_types.h:
+
+/home/ack/work/emscripten/system/include/libc/machine/_default_types.h:
+
+/home/ack/work/emscripten/system/include/libc/sys/lock.h:
+
+/home/ack/work/emscripten/system/include/libc/machine/stdlib.h:
+
+/home/ack/work/emscripten/system/include/libc/alloca.h:
+
+include/enet/unix.h:
+
+/home/ack/work/emscripten/system/include/libc/sys/time.h:
+
+/home/ack/work/emscripten/system/include/libc/sys/types.h:
+
+/home/ack/work/emscripten/system/include/libc/machine/types.h:
+
+/home/ack/work/emscripten/system/include/libc/stdint.h:
+
+/home/ack/work/emscripten/system/include/libc/sys/sched.h:
+
+/home/ack/work/emscripten/system/include/libc/time.h:
+
+/home/ack/work/emscripten/system/include/libc/machine/time.h:
+
+/home/ack/work/emscripten/system/include/libc/signal.h:
+
+/home/ack/work/emscripten/system/include/libc/sys/signal.h:
+
+/home/ack/work/emscripten/system/include/net/netinet/in.h:
+
+/home/ack/work/emscripten/system/include/libc/unistd.h:
+
+/home/ack/work/emscripten/system/include/libc/sys/unistd.h:
+
+include/enet/types.h:
+
+include/enet/protocol.h:
+
+include/enet/list.h:
+
+include/enet/callbacks.h:
