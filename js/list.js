@@ -86,6 +86,12 @@ function createListItemFromHost(host, element){
     + ' Player' + (host['metadata']['connected'] !== 1 ? 's' : '');
   newListItem.querySelector('.game-name').innerHTML = host['metadata']['name'] || '';
   
+  var level = host.url.match(/setup=(\w+)[&$]/);
+
+  if (level) {
+    newListItem.querySelector('.game-image').classList.add(level[1]);
+  }
+
   //force onclick to be removed
   newListItem.onclick = null;
 

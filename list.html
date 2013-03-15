@@ -2,14 +2,14 @@
 <html>
 <head>
   <meta charset="utf-8" />
-  <link rel="stylesheet" href="list.css">
+  <link rel="stylesheet" href="css/list.css">
 	<script src="http://wrtcb.jit.su/socket.io/socket.io.js"></script>
 </head>
 <body>
 	<h1>Bananabread Multiplayer Games List</h1>
 	<ul id="list">
 		<li>
-			<img class="game-image" src="assets/screenshots/22_mini.jpg">
+			<div class="game-image"></div>
 			<div class="game-container">
 				<h2 class="game-name">Game Name</h2>
 				<div class="game-time"></div>
@@ -20,7 +20,7 @@
 	<div id="broker-url"></div>
 	<div id="join-modal" hidden="true">
 		<div id="join-game-container">
-			<img class="game-image" src="assets/screenshots/22_mini.jpg">
+			<div class="game-image"></div>
 			<div class="game-container">
 				<h2 class="game-name">Game Name</h2>
 				<div class="game-time"></div>
@@ -33,5 +33,5 @@
 		</div>
 	</div>
 </body>
-<script src="list.js"></script>
+<script src="js/list.js"></script>
 </html>
