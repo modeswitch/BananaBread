@@ -1,5 +1,58 @@
 (function(){
 
+var levels = [
+  {
+    internalName: 'six',
+    externalName: 'Colony',
+    type: 'multiplayer'
+  },
+  {
+    internalName: 'seven',
+    externalName: 'Bunker',
+    type: 'multiplayer'
+  },
+  {
+    internalName: 'eight',
+    externalName: 'Hanger',
+    type: 'multiplayer'
+  },
+  {
+    internalName: 'nine',
+    externalName: 'Ship',
+    type: 'multiplayer'
+  },
+  {
+    internalName: 'ten',
+    externalName: 'Ruins',
+    type: 'multiplayer'
+  },
+  {
+    internalName: 'one',
+    externalName: 'Arena',
+    type: 'singleplayer'
+  },
+  {
+    internalName: 'two',
+    externalName: 'Two Towers',
+    type: 'singleplayer'
+  },
+  {
+    internalName: 'three',
+    externalName: 'Lava Chamber',
+    type: 'singleplayer'
+  },
+  {
+    internalName: 'four',
+    externalName: 'Future',
+    type: 'singleplayer'
+  },
+  {
+    internalName: 'five',
+    externalName: 'Lava Rooms',
+    type: 'singleplayer'
+  }
+];
+
 var brokerUrl = 'http://wrtcb.jit.su:80';
 
 if (window.location.search) {
@@ -20,12 +73,9 @@ var filter = {
   }
 };
 
-var listElement = document.querySelector('#list');
+var listElement = document.querySelector('#join-list');
 var listItemElement = listElement.querySelector('li');
 listElement.removeChild(listItemElement);
-
-var joinModal = document.querySelector('#join-modal');
-var joinGameContainer = joinModal.querySelector('#join-game-container');
 
 var socket = io.connect(brokerUrl + '/list');
 socket.on('connect', function() {
@@ -67,17 +117,21 @@ function clear() {
   }
 }
 
-var cancelButton = joinGameContainer.querySelector('.cancel-button');
-var joinButton = joinGameContainer.querySelector('.join-button');
+var createGameList = document.querySelector('#create-list');
+var createGameTemplate = createGameList.querySelector('li');
 
-cancelButton.onclick = function(e) {
-  joinModal.hidden = true;
-};
+createGameList.removeChild(createGameTemplate);
 
-joinButton.onclick = function(e) {
-  joinModal.hidden = true;
-  return true;
-};
+levels.forEach(function(level){
+  var li = createGameTemplate.cloneNode(true);
+  li.querySelector('.game-name').innerHTML = level.externalName;
+  li.querySelector('.game-type').innerHTML = level.type.substr(0, 1).toUpperCase() + level.type.substr(1);
+  li.querySelector('.game-image').classList.add(level.internalName);
+  li.onclick = function(e) {
+    console.log('lol');
+  };
+  createGameList.appendChild(li);
+});
 
 function createListItemFromHost(host, element){
   var newListItem = element || listItemElement.cloneNode(true);
@@ -96,12 +150,7 @@ function createListItemFromHost(host, element){
   newListItem.onclick = null;
 
   newListItem.onclick = function(e) {
-    joinGameContainer.querySelector('.game-time').innerHTML = new Date(host['ctime']).toString();
-    joinGameContainer.querySelector('.game-users').innerHTML = host['metadata']['connected']
-      + ' Player' + (host['metadata']['connected'] !== 1 ? 's' : '');
-    joinGameContainer.querySelector('.game-name').innerHTML = host['metadata']['name'] || '';
-    joinButton.href = setQuery(host['url'], 'webrtc-session=' + host['route']);
-    joinModal.hidden = false;
+    window.location.href = setQuery(host['url'], 'webrtc-session=' + host['route']);
   };
 
   return newListItem;

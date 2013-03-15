@@ -30,7 +30,8 @@
 }
 
 html {
-
+  width: 100%;
+  height: 100%;
 }
 
 body {
@@ -58,14 +59,37 @@ h1, h2, h3, h4, .game-name {
   text-shadow:  rgba(0, 0, 0, 0.9) 0.15em 0.15em 0.2em;
 }
 
-#list {
-  width: 80%;
+#main {
+  width: 90%;
   margin: 0 auto;
-  padding: 0;
-  list-style: none;
+  position: relative;
 }
 
-#list li {
+#join-container {
+  width: 65%;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+#create-container {
+  width: 30%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+#create-container .game-image {
+
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+  padding: 5px;
+}
+
+ul li {
   height: 120px;
   box-shadow: 2px 2px 5px rgba(25, 25, 25, 0.9);
   background: rgba(0, 0, 0, 0.5);
@@ -86,7 +110,7 @@ h1, h2, h3, h4, .game-name {
   width: 100%;
 }
 
-.game-name, .game-image {
+.game-name {
   position: absolute;
   top: 0;
   left: 0;
@@ -94,12 +118,6 @@ h1, h2, h3, h4, .game-name {
 
 .game-name {
   z-index: 2;
-}
-
-.game-image {
-  z-index: 1;
-  height: 110%;
-  opacity: 0.7;
 }
 
 .game-time {
@@ -182,16 +200,55 @@ h1, h2, h3, h4, .game-name {
   background: rgba(50, 50, 50, 1);
 }
 
-#list li {
+ul li {
   margin-bottom: .5em;
 }
 
+ul li:hover {
+  /*background-color: rgba(120, 120, 120, 0.5);*/
+}
+
+ul li:hover .game-image {
+  opacity: 1.0;
+}
+
 .game-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  height: 110%;
+  opacity: 0.5;
   background-image: url('../assets/screenshots/22_mini.jpg');
   background-repeat: no-repeat;
-  background-size: auto 100%;
+  background-size: cover;
   width: 100%;
   height: 100%;
+  transition: opacity 0.05s;
+  -moz-transition: opacity 0.05s;
+  -webkit-transition: opacity 0.05s;
+  -o-transition: opacity 0.05s;
+  -ms-transition: opacity 0.05s;
+}
+
+.game-image.one {
+  background-image: url('../assets/screenshots/22_mini.jpg');
+}
+
+.game-image.two {
+  background-image: url('../assets/screenshots/15_mini.jpg');
+}
+
+.game-image.three {
+  background-image: url('../assets/screenshots/14_mini.jpg');
+}
+
+.game-image.four {
+  background-image: url('../assets/screenshots/03_mini.jpg');
+}
+
+.game-image.five {
+  background-image: url('../assets/screenshots/07_mini.jpg');
 }
 
 .game-image.six {
@@ -214,6 +271,9 @@ h1, h2, h3, h4, .game-name {
   background-image: url('../assets/screenshots/ten_mini.jpg');
 }
 
-#list li:hover {
-  background-color: rgba(120, 120, 120, 0.5);
+.game-type {
+  font-size: .8em;
+  position: absolute;
+  top: 0;
+  right: 0;
 }

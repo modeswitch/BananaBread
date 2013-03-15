@@ -27,3 +27,4 @@ game/preload_*.js
 game/bb*.js
 *.data
 server*.html
+.DS_Store

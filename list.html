@@ -6,32 +6,35 @@
 	<script src="http://wrtcb.jit.su/socket.io/socket.io.js"></script>
 </head>
 <body>
-	<h1>Bananabread Multiplayer Games List</h1>
-	<ul id="list">
-		<li>
-			<div class="game-image"></div>
-			<div class="game-container">
-				<h2 class="game-name">Game Name</h2>
-				<div class="game-time"></div>
-				<div class="game-users"></div>
-			</div>
-		</li>
-	</ul>
-	<div id="broker-url"></div>
-	<div id="join-modal" hidden="true">
-		<div id="join-game-container">
-			<div class="game-image"></div>
-			<div class="game-container">
-				<h2 class="game-name">Game Name</h2>
-				<div class="game-time"></div>
-				<div class="game-users"></div>
-			</div>
-			<div id="join-game-buttons">
-				<a class="join-game-button join-button">Join</a>
-				<a class="join-game-button cancel-button">Cancel</a>
-			</div>
+	<h1>Bananabread Games List</h1>
+	<div id="main">
+		<div id="create-container">
+			<h2>Create a Game</h2>
+			<ul id="create-list">
+				<li>
+					<div class="game-image"></div>
+					<div class="game-container">
+						<h2 class="game-name">Game Name</h2>
+						<div class="game-type"></div>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<div id="join-container">
+			<h2>Join a Game</h2>
+			<ul id="join-list">
+				<li>
+					<div class="game-image"></div>
+					<div class="game-container">
+						<h2 class="game-name">Game Name</h2>
+						<div class="game-time"></div>
+						<div class="game-users"></div>
+					</div>
+				</li>
+			</ul>
 		</div>
 	</div>
+	<div id="broker-url"></div>
 </body>
 <script src="js/list.js"></script>
 </html>
