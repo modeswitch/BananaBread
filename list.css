@@ -83,19 +83,20 @@ h1, h2, h3, h4, .game-name {
 .game-container {
   position: relative;
   height: 100%;
+  width: 100%;
 }
 
-#list li .game-name, #list li img {
+.game-name, .game-image {
   position: absolute;
   top: 0;
   left: 0;
 }
 
-#list li .game-name {
+.game-name {
   z-index: 2;
 }
 
-#list li img {
+.game-image {
   z-index: 1;
   height: 110%;
   opacity: 0.7;
@@ -134,7 +135,7 @@ h1, h2, h3, h4, .game-name {
   position: relative;
   margin-top: -60px;
   top: 50%;
-  background: rgba(50, 50, 50, 0.9);
+  background: rgba(50, 50, 50, 1);
   padding: 10px;
 }
 
@@ -147,11 +148,11 @@ h1, h2, h3, h4, .game-name {
 
 .join-game-button {
   cursor: pointer;
-  height: 4em;
+  height: 3em;
   width: 6em;
   margin: 10px;
   text-align: center;
-  line-height: 4em;
+  line-height: 3em;
   box-shadow: 2px 2px 5px rgba(25, 25, 25, 0.9);
   display: inline-block;
   color: #fff;
@@ -161,8 +162,8 @@ h1, h2, h3, h4, .game-name {
   position: absolute;
   left: 0;
   bottom: 0;
-  height: 4em;
-  width: 20em;
+  margin: 5px;
+  z-index: 5;
 }
 
 .join-button {
@@ -179,4 +180,12 @@ h1, h2, h3, h4, .game-name {
 
 .cancel-button:hover {
   background: rgb(218, 81, 50);
+}
+
+#join-game-container .game-container {
+  background: rgba(50, 50, 50, 1);
+}
+
+#list li {
+  margin-bottom: .5em;
 }

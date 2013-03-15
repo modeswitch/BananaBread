@@ -25,6 +25,7 @@ var listItemElement = listElement.querySelector('li');
 listElement.removeChild(listItemElement);
 
 var joinModal = document.querySelector('#join-modal');
+var joinGameContainer = joinModal.querySelector('#join-game-container');
 
 var socket = io.connect(brokerUrl + '/list');
 socket.on('connect', function() {
@@ -66,6 +67,18 @@ function clear() {
   }
 }
 
+var cancelButton = joinGameContainer.querySelector('.cancel-button');
+var joinButton = joinGameContainer.querySelector('.join-button');
+
+cancelButton.onclick = function(e) {
+  joinModal.hidden = true;
+};
+
+joinButton.onclick = function(e) {
+  joinModal.hidden = true;
+  return true;
+};
+
 function createListItemFromHost(host, element){
   var newListItem = element || listItemElement.cloneNode(true);
   newListItem.querySelector('.game-time').innerHTML = new Date(host['ctime']).toString();
@@ -77,29 +90,11 @@ function createListItemFromHost(host, element){
   newListItem.onclick = null;
 
   newListItem.onclick = function(e) {
-    var gameContainer = joinModal.querySelector('#join-game-container');
-    var listItemContainer = newListItem.querySelector('.game-container').cloneNode(true);
-
-    var oldListItemContainer = gameContainer.querySelector('.game-container');
-    if (oldListItemContainer) {
-      gameContainer.removeChild(oldListItemContainer);
-    }
-
-    // var joinButton = document.createElement('div');
-    // joinButton.className = 'join-game-button join-button';
-    // joinButton.href = setQuery(host['url'], 'webrtc-session=' + host['route']);
-
-    // var cancelButton = document.createElement('div');
-    // cancelButton.className = 'join-game-button cancel-button';
-    // cancelButton.onclick = function(e) {
-    //   joinModal.hidden = true;
-    // };
-
-    // listItemContainer.appendChild(joinButton);
-    // listItemContainer.appendChild(cancelButton);
-
-    gameContainer.appendChild(listItemContainer);
-
+    joinGameContainer.querySelector('.game-time').innerHTML = new Date(host['ctime']).toString();
+    joinGameContainer.querySelector('.game-users').innerHTML = host['metadata']['connected']
+      + ' Player' + (host['metadata']['connected'] !== 1 ? 's' : '');
+    joinGameContainer.querySelector('.game-name').innerHTML = host['metadata']['name'] || '';
+    joinButton.href = setQuery(host['url'], 'webrtc-session=' + host['route']);
     joinModal.hidden = false;
   };
 
