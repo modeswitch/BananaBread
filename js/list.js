@@ -4,52 +4,62 @@ var levels = [
   {
     internalName: 'six',
     externalName: 'Colony',
-    type: 'multiplayer'
+    type: 'multiplayer',
+    url: 'game.html?setup=six&preload=six&debug&serve'
   },
   {
     internalName: 'seven',
     externalName: 'Bunker',
-    type: 'multiplayer'
+    type: 'multiplayer',
+    url: 'game.html?setup=seven&preload=seven&debug&serve'
   },
   {
     internalName: 'eight',
     externalName: 'Hanger',
-    type: 'multiplayer'
+    type: 'multiplayer',
+    url: 'game.html?setup=eight&preload=eight&debug&serve'
   },
   {
     internalName: 'nine',
     externalName: 'Ship',
-    type: 'multiplayer'
+    type: 'multiplayer',
+    url: 'game.html?setup=nine&preload=nine&debug&serve'
   },
   {
     internalName: 'ten',
     externalName: 'Ruins',
-    type: 'multiplayer'
+    type: 'multiplayer',
+    url: 'game.html?setup=ten&preload=ten&debug&serve'
   },
   {
     internalName: 'one',
     externalName: 'Arena',
-    type: 'singleplayer'
+    type: 'singleplayer',
+    url: 'game.html?setup=low&preload=low&debug'
   },
   {
     internalName: 'two',
     externalName: 'Two Towers',
-    type: 'singleplayer'
+    type: 'singleplayer',
+    url: 'game.html?setup=medium&preload=medium&debug'
   },
   {
     internalName: 'three',
     externalName: 'Lava Chamber',
-    type: 'singleplayer'
+    type: 'singleplayer',
+    url: 'game.html?setup=high&preload=high&debug'
   },
   {
     internalName: 'four',
     externalName: 'Future',
-    type: 'singleplayer'
+    type: 'singleplayer',
+    url: 'game.html?setup=four&preload=four&debug'
   },
   {
     internalName: 'five',
     externalName: 'Lava Rooms',
-    type: 'singleplayer'
+    type: 'singleplayer',
+    url: 'game.html?setup=five&preload=five&debug'
   }
 ];
 
@@ -127,14 +137,14 @@ levels.forEach(function(level){
   li.querySelector('.game-name').innerHTML = level.externalName;
   li.querySelector('.game-type').innerHTML = level.type.substr(0, 1).toUpperCase() + level.type.substr(1);
   li.querySelector('.game-image').classList.add(level.internalName);
-  li.onclick = function(e) {
-    console.log('lol');
-  };
+  li.querySelector('a').href = level.url;
   createGameList.appendChild(li);
 });
 
 function createListItemFromHost(host, element){
   var newListItem = element || listItemElement.cloneNode(true);
+
+  newListItem.querySelector('a').href = setQuery(host['url'], 'webrtc-session=' + host['route']);
   newListItem.querySelector('.game-time').innerHTML = new Date(host['ctime']).toString();
   newListItem.querySelector('.game-users').innerHTML = host['metadata']['connected']
     + ' Player' + (host['metadata']['connected'] !== 1 ? 's' : '');
@@ -145,13 +155,6 @@ function createListItemFromHost(host, element){
   if (level) {
     newListItem.querySelector('.game-image').classList.add(level[1]);
   }
-
-  //force onclick to be removed
-  newListItem.onclick = null;
-
-  newListItem.onclick = function(e) {
-    window.location.href = setQuery(host['url'], 'webrtc-session=' + host['route']);
-  };
 
   return newListItem;
 }
