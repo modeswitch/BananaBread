@@ -204,10 +204,6 @@ ul li {
   margin-bottom: .5em;
 }
 
-ul li:hover {
-  /*background-color: rgba(120, 120, 120, 0.5);*/
-}
-
 ul li:hover .game-image {
   opacity: 1.0;
 }
@@ -278,6 +274,6 @@ ul li a {
 .game-type {
   font-size: .8em;
   position: absolute;
-  top: 0;
+  bottom: 0;
   right: 0;
 }

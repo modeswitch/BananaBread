@@ -143,9 +143,10 @@ levels.forEach(function(level){
 
 function createListItemFromHost(host, element){
   var newListItem = element || listItemElement.cloneNode(true);
+  var date = new Date(host.ctime);
 
   newListItem.querySelector('a').href = setQuery(host['url'], 'webrtc-session=' + host['route']);
-  newListItem.querySelector('.game-time').innerHTML = new Date(host['ctime']).toString();
+  newListItem.querySelector('.game-time').innerHTML = date.toLocaleString();
   newListItem.querySelector('.game-users').innerHTML = host['metadata']['connected']
     + ' Player' + (host['metadata']['connected'] !== 1 ? 's' : '');
   newListItem.querySelector('.game-name').innerHTML = host['metadata']['name'] || '';
