@@ -1272,36 +1272,52 @@ Module['FS_createPath']('/packages', 'base', true, true);
     filePreload76.send(null);
 
     var filePreload77 = new DataRequest();
-    filePreload77.open('GET', 'packages/base/sky.ogz', true);
+    filePreload77.open('GET', 'packages/base/sky_low.ogz', true);
     filePreload77.responseType = 'arraybuffer';
     filePreload77.onload = function() {
       var arrayBuffer = filePreload77.response;
-      assert(arrayBuffer, 'Loading file packages/base/sky.ogz failed.');
+      assert(arrayBuffer, 'Loading file packages/base/sky_low.ogz failed.');
       var byteArray = !arrayBuffer.subarray ? new Uint8Array(arrayBuffer) : arrayBuffer;
       
-      Module['FS_createPreloadedFile']('/packages/base', 'sky.ogz', byteArray, true, true, function() {
-        Module['removeRunDependency']('fp packages/base/sky.ogz');
+      Module['FS_createPreloadedFile']('/packages/base', 'sky_low.ogz', byteArray, true, true, function() {
+        Module['removeRunDependency']('fp packages/base/sky_low.ogz');
 
       });
     };
-    Module['addRunDependency']('fp packages/base/sky.ogz');
+    Module['addRunDependency']('fp packages/base/sky_low.ogz');
     filePreload77.send(null);
 
     var filePreload78 = new DataRequest();
-    filePreload78.open('GET', 'packages/base/sky.cfg', true);
+    filePreload78.open('GET', 'packages/base/sky_low.cfg', true);
     filePreload78.responseType = 'arraybuffer';
     filePreload78.onload = function() {
       var arrayBuffer = filePreload78.response;
-      assert(arrayBuffer, 'Loading file packages/base/sky.cfg failed.');
+      assert(arrayBuffer, 'Loading file packages/base/sky_low.cfg failed.');
       var byteArray = !arrayBuffer.subarray ? new Uint8Array(arrayBuffer) : arrayBuffer;
       
-      Module['FS_createPreloadedFile']('/packages/base', 'sky.cfg', byteArray, true, true, function() {
-        Module['removeRunDependency']('fp packages/base/sky.cfg');
+      Module['FS_createPreloadedFile']('/packages/base', 'sky_low.cfg', byteArray, true, true, function() {
+        Module['removeRunDependency']('fp packages/base/sky_low.cfg');
 
       });
     };
-    Module['addRunDependency']('fp packages/base/sky.cfg');
+    Module['addRunDependency']('fp packages/base/sky_low.cfg');
     filePreload78.send(null);
+
+    var filePreload79 = new DataRequest();
+    filePreload79.open('GET', 'packages/base/sky_low.wpt', true);
+    filePreload79.responseType = 'arraybuffer';
+    filePreload79.onload = function() {
+      var arrayBuffer = filePreload79.response;
+      assert(arrayBuffer, 'Loading file packages/base/sky_low.wpt failed.');
+      var byteArray = !arrayBuffer.subarray ? new Uint8Array(arrayBuffer) : arrayBuffer;
+      
+      Module['FS_createPreloadedFile']('/packages/base', 'sky_low.wpt', byteArray, true, true, function() {
+        Module['removeRunDependency']('fp packages/base/sky_low.wpt');
+
+      });
+    };
+    Module['addRunDependency']('fp packages/base/sky_low.wpt');
+    filePreload79.send(null);
 
     if (!Module.expectedDataFileDownloads) {
       Module.expectedDataFileDownloads = 0;
@@ -1655,12 +1671,16 @@ Module['FS_createPath']('/packages', 'base', true, true);
         curr.response = byteArray.subarray(29641181,29646158);
         curr.onload();
       
-        curr = DataRequest.prototype.requests['packages/base/sky.ogz'];
-        curr.response = byteArray.subarray(29646158,33628172);
+        curr = DataRequest.prototype.requests['packages/base/sky_low.ogz'];
+        curr.response = byteArray.subarray(29646158,35898199);
         curr.onload();
       
-        curr = DataRequest.prototype.requests['packages/base/sky.cfg'];
-        curr.response = byteArray.subarray(33628172,33629250);
+        curr = DataRequest.prototype.requests['packages/base/sky_low.cfg'];
+        curr.response = byteArray.subarray(35898199,35899281);
+        curr.onload();
+      
+        curr = DataRequest.prototype.requests['packages/base/sky_low.wpt'];
+        curr.response = byteArray.subarray(35899281,35905599);
         curr.onload();
                 Module['removeRunDependency']('datafile_ten.data');
 

@@ -850,6 +850,22 @@ Module['FS_createPath']('/packages', 'base', true, true);
     Module['addRunDependency']('fp packages/base/mo.cfg');
     filePreload50.send(null);
 
+    var filePreload51 = new DataRequest();
+    filePreload51.open('GET', 'packages/base/mo.wpt', true);
+    filePreload51.responseType = 'arraybuffer';
+    filePreload51.onload = function() {
+      var arrayBuffer = filePreload51.response;
+      assert(arrayBuffer, 'Loading file packages/base/mo.wpt failed.');
+      var byteArray = !arrayBuffer.subarray ? new Uint8Array(arrayBuffer) : arrayBuffer;
+      
+      Module['FS_createPreloadedFile']('/packages/base', 'mo.wpt', byteArray, true, true, function() {
+        Module['removeRunDependency']('fp packages/base/mo.wpt');
+
+      });
+    };
+    Module['addRunDependency']('fp packages/base/mo.wpt');
+    filePreload51.send(null);
+
     if (!Module.expectedDataFileDownloads) {
       Module.expectedDataFileDownloads = 0;
       Module.finishedDataFileDownloads = 0;
@@ -1091,11 +1107,15 @@ Module['FS_createPath']('/packages', 'base', true, true);
         curr.onload();
       
         curr = DataRequest.prototype.requests['packages/base/mo.ogz'];
-        curr.response = byteArray.subarray(33500289,37972304);
+        curr.response = byteArray.subarray(33500289,38240666);
         curr.onload();
       
         curr = DataRequest.prototype.requests['packages/base/mo.cfg'];
-        curr.response = byteArray.subarray(37972304,37972958);
+        curr.response = byteArray.subarray(38240666,38241320);
+        curr.onload();
+      
+        curr = DataRequest.prototype.requests['packages/base/mo.wpt'];
+        curr.response = byteArray.subarray(38241320,38247797);
         curr.onload();
                 Module['removeRunDependency']('datafile_seven.data');
 

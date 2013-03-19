@@ -9,10 +9,12 @@ Module.tweakDetail = function() {
   BananaBread.execute('glare 1');
   BananaBread.execute('glarescale 1.75');
   BananaBread.execute('blurglare 7');
+  BananaBread.execute('waterreflect 1');
+  BananaBread.execute('waterrefract 1');
 };
 
 Module.loadDefaultMap = function() {
-  BananaBread.execute('sleep 10 [ ffa zo ]');
+  BananaBread.execute('sleep 10 [ effic zo_min ]');
 };
 
 Module.autoexec = function() {

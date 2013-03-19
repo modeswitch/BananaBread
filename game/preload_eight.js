@@ -850,6 +850,22 @@ Module['FS_createPath']('/packages', 'base', true, true);
     Module['addRunDependency']('fp packages/base/sb2.cfg');
     filePreload50.send(null);
 
+    var filePreload51 = new DataRequest();
+    filePreload51.open('GET', 'packages/base/sb2.wpt', true);
+    filePreload51.responseType = 'arraybuffer';
+    filePreload51.onload = function() {
+      var arrayBuffer = filePreload51.response;
+      assert(arrayBuffer, 'Loading file packages/base/sb2.wpt failed.');
+      var byteArray = !arrayBuffer.subarray ? new Uint8Array(arrayBuffer) : arrayBuffer;
+      
+      Module['FS_createPreloadedFile']('/packages/base', 'sb2.wpt', byteArray, true, true, function() {
+        Module['removeRunDependency']('fp packages/base/sb2.wpt');
+
+      });
+    };
+    Module['addRunDependency']('fp packages/base/sb2.wpt');
+    filePreload51.send(null);
+
     if (!Module.expectedDataFileDownloads) {
       Module.expectedDataFileDownloads = 0;
       Module.finishedDataFileDownloads = 0;
@@ -1091,11 +1107,15 @@ Module['FS_createPath']('/packages', 'base', true, true);
         curr.onload();
       
         curr = DataRequest.prototype.requests['packages/base/sb2.ogz'];
-        curr.response = byteArray.subarray(33500289,43834860);
+        curr.response = byteArray.subarray(33500289,38096200);
         curr.onload();
       
         curr = DataRequest.prototype.requests['packages/base/sb2.cfg'];
-        curr.response = byteArray.subarray(43834860,43835514);
+        curr.response = byteArray.subarray(38096200,38096854);
+        curr.onload();
+      
+        curr = DataRequest.prototype.requests['packages/base/sb2.wpt'];
+        curr.response = byteArray.subarray(38096854,38119463);
         curr.onload();
                 Module['removeRunDependency']('datafile_eight.data');
 
