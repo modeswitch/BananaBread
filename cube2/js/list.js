@@ -1,58 +1,5 @@
 (function(){
 
-var levels = [
-  {
-    internalName: 'six',
-    externalName: 'Colony',
-    type: 'multiplayer',
-    url: 'game.html?setup=six&serve'
-  },
-  {
-    internalName: 'one',
-    externalName: 'Arena',
-    type: 'multiplayer',
-    url: 'game.html?setup=low&serve'
-  },
-  {
-    internalName: 'seven',
-    externalName: 'Bunker',
-    type: 'multiplayer',
-    url: 'game.html?setup=seven&serve'
-  },
-  /*
-  {
-    internalName: 'nine',
-    externalName: 'Ship',
-    type: 'multiplayer',
-    url: 'game.html?setup=nine&serve'
-  },
-  */
-  {
-    internalName: 'three',
-    externalName: 'Lava Chamber',
-    type: 'multiplayer',
-    url: 'game.html?setup=high&serve'
-  },
-  {
-    internalName: 'ten',
-    externalName: 'Ruins',
-    type: 'multiplayer',
-    url: 'game.html?setup=ten&serve'
-  },
-  {
-    internalName: 'eight',
-    externalName: 'Hanger',
-    type: 'multiplayer',
-    url: 'game.html?setup=eight&serve'
-  },
-  {
-    internalName: 'two',
-    externalName: 'Two Towers',
-    type: 'multiplayer',
-    url: 'game.html?setup=medium&serve'
-  }
-];
-
 var brokerUrl = 'https://mdsw.ch:8080';
 var filterUrl = undefined;
 
@@ -70,6 +17,59 @@ if (window.location.search) {
     }
   }
 }
+
+var levels = [
+  {
+    internalName: 'six',
+    externalName: 'Colony',
+    type: 'multiplayer',
+    url: 'game.html?setup=six&serve&webrtc-broker=' + brokerUrl
+  },
+  {
+    internalName: 'one',
+    externalName: 'Arena',
+    type: 'multiplayer',
+    url: 'game.html?setup=low&serve&webrtc-broker=' + brokerUrl
+  },
+  {
+    internalName: 'seven',
+    externalName: 'Bunker',
+    type: 'multiplayer',
+    url: 'game.html?setup=seven&serve&webrtc-broker=' + brokerUrl
+  },
+  /*
+  {
+    internalName: 'nine',
+    externalName: 'Ship',
+    type: 'multiplayer',
+    url: 'game.html?setup=nine&serve&webrtc-broker=' + brokerUrl
+  },
+  */
+  {
+    internalName: 'three',
+    externalName: 'Lava Chamber',
+    type: 'multiplayer',
+    url: 'game.html?setup=high&serve&webrtc-broker=' + brokerUrl
+  },
+  {
+    internalName: 'ten',
+    externalName: 'Ruins',
+    type: 'multiplayer',
+    url: 'game.html?setup=ten&serve&webrtc-broker=' + brokerUrl
+  },
+  {
+    internalName: 'eight',
+    externalName: 'Hanger',
+    type: 'multiplayer',
+    url: 'game.html?setup=eight&serve&webrtc-broker=' + brokerUrl
+  },
+  {
+    internalName: 'two',
+    externalName: 'Two Towers',
+    type: 'multiplayer',
+    url: 'game.html?setup=medium&serve&webrtc-broker=' + brokerUrl
+  }
+];
 
 document.querySelector('#broker-url').innerHTML = 'Broker: ' + brokerUrl;
 

@@ -208,6 +208,9 @@ var Module = {
       Module.canvas.classList.add( 'hide' );
       //BananaBread.execute('oldmusicvol = $musicvol ; musicvol 0');
     }
+  },
+  preMainLoop: function() {
+    window.updateGamepads();
   }
 };
 
