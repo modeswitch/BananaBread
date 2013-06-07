@@ -25,6 +25,8 @@ var buttonStates = {
 var buttonMap = {
   4: {type: 'key', value: 32}, // space
   5: {type: 'mouse', value: 0}, // mouse1
+  2: {type: 'mouse', value: 4},
+  3: {type: 'mouse', value: 3},
 };
 
 var axisStates = {
@@ -41,6 +43,8 @@ var axisStates = {
 var axisMap = {
   0: {type: 'key', value: [65, 68]},
   1: {type: 'key', value: [87, 83]},
+  3: {type: 'mouse', value: 'X'},
+  4: {type: 'mouse', value: 'Y'},
 };
 
 function handleButtonEvent(event) {
@@ -64,37 +68,54 @@ function handleButtonEvent(event) {
   }
 };
 
+var mouseState = {
+  type: 'mousemove',
+  movementX: 0,
+  movementY: 0
+};
+
+function mouseTransform(value) {
+  if(!value) return;
+
+  var sign = value/Math.abs(value);
+  return Math.log(Math.abs(value) * 10 + 1)  * sign;
+};
+
 function handleAxisEvent(event) {
   // do mousemove
   if(!axisMap.hasOwnProperty(event.axis))
     return;
 
-  var mapping = axisMap[event.axis];
+  var axis = event.axis;
+  var value = event.value;
+  var mapping = axisMap[axis];
 
   if('key' == mapping.type) {
-    if(axisStates[event.axis] < 0 && !event.value < 0) {
+    if(axisStates[axis] < 0 && value >= 0) {
       _SDL_QueueEvent({
         type: 'keyup',
         keyCode: mapping.value[0]
       });
-    } else if(axisStates[event.axis] > 0 && !event.value > 0) {
+    } else if(axisStates[axis] > 0 && value <= 0) {
       _SDL_QueueEvent({
         type: 'keyup',
         keyCode: mapping.value[1]
       });
     }
 
-    if(!axisStates[event.axis] < 0 && event.value < 0) {
+    if(axisStates[axis] >= 0 && value < 0) {
       _SDL_QueueEvent({
         type: 'keydown',
         keyCode: mapping.value[0]
       });
-    } else if(!axisStates[event.axis] > 0 && event.value > 0) {
+    } else if(axisStates[axis] <= 0 && value > 0) {
       _SDL_QueueEvent({
         type: 'keydown',
         keyCode: mapping.value[1]
       });
     }
+  } else if('mouse' == mapping.type) {
+    mouseState['movement' + mapping.value] = mouseTransform(value);
   }
 };
 
@@ -116,13 +137,15 @@ function updateGamepads() {
     }
 
     for (i=0; i<controller.axes.length; i++) {
-      if(controller.axes[i] != axisStates[i]) {
+      var value = Number(controller.axes[i].toFixed(1));
         // axis event
-        handleAxisEvent({
-          axis: i,
-          value: controller.axes[i]
-        });
-        axisStates[i] = controller.axes[i];
+      handleAxisEvent({
+        axis: i,
+        value: value
+      });
+      axisStates[i] = value;
+      if(mouseState.movementX != 0 || mouseState.movementY != 0) {
+        _SDL_QueueEvent(mouseState);
       }
     }
   }
