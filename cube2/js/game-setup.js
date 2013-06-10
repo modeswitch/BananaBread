@@ -143,7 +143,7 @@ var Module = {
       console.error(error);
     }
   },
-  TOTAL_MEMORY: 256*1024*1024, // may need to adjust this for huge levels
+  TOTAL_MEMORY: 512*1024*1024, // may need to adjust this for huge levels
   failed: false,
   preRun: [],
   postRun: [],

@@ -78,7 +78,9 @@ function mouseTransform(value) {
   if(!value) return;
 
   var sign = value/Math.abs(value);
-  return Math.log(Math.abs(value) * 10 + 1)  * sign;
+  //var result = (Math.log(Math.abs(value) + 1) + 1)  * sign;
+  var result = 1 * sign;
+  return result;
 };
 
 function handleAxisEvent(event) {
