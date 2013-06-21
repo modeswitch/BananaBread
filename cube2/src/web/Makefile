@@ -416,7 +416,7 @@ CHARACTER_FILES = $(SNOUTX10K_MODEL_FILES) \
 
 CRUNCH_QUALITY = 64
 
-#CRUNCH_FLAG=--crunch=$(CRUNCH_QUALITY)
+CRUNCH_FLAG=--crunch=$(CRUNCH_QUALITY)
 #CACHE_FLAG=--use-preload-cache
 
 # WebRTC library doesn't work under closure
